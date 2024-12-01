@@ -14,6 +14,14 @@ const schemas = {
 exports.validateDto = (schemaName) => {
   return (req, res, next) => {
     const schema = schemas[schemaName];
+
+    if (req.body.items && Array.isArray(req.body.items)) {
+      // Преобразование в строки с проверкой на тип
+      req.body.items = req.body.items.map((item) =>
+        typeof item === "object" ? JSON.stringify(item) : String(item)
+      );
+    }
+
     const { error } = schema.validate(req.body);
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
