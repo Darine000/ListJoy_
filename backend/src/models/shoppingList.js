@@ -19,7 +19,7 @@ const shoppingLists = [
       { id: "i3", name: "Máslo", resolved: false },
       { id: "i4", name: "Sýr", resolved: true },
     ],
-    archived: false,
+    archived: true,
   },
 ];
 
@@ -78,13 +78,13 @@ class ShoppingList {
   }
 
 static archive(id) {
-  const shoppingList = this.getById(id); // Ищем список по ID
+  const shoppingList = this.getById(id); 
   if (!shoppingList) {
-    return null; // Если список не найден
+    return null; 
   }
 
-  shoppingList.archived = !shoppingList.archived; // Меняем статус архивации
-  return shoppingList; // Возвращаем обновлённый список
+  shoppingList.archived = !shoppingList.archived; 
+  return shoppingList; 
 }
 
   static getArchived() {

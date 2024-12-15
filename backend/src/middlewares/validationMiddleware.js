@@ -16,7 +16,7 @@ exports.validateDto = (schemaName) => {
     const schema = schemas[schemaName];
 
     if (req.body.items && Array.isArray(req.body.items)) {
-      // Преобразование в строки с проверкой на тип
+
       req.body.items = req.body.items.map((item) =>
         typeof item === "object" ? JSON.stringify(item) : String(item)
       );

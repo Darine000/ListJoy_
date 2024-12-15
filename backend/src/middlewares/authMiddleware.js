@@ -3,6 +3,6 @@ exports.authMiddleware = (req, res, next) => {
   if (!userProfile || (userProfile !== "admin" && userProfile !== "user")) {
     return res.status(403).json({ error: "Unauthorized" });
   }
-  req.userProfile = userProfile; // Pass profile to next middleware
+  req.userProfile = userProfile; 
   next();
 };

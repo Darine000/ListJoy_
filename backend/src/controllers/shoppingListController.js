@@ -51,18 +51,18 @@ exports.updateShoppingList = (req, res) => {
   const updates = req.body;
 
   try {
-    // Проверяем, существует ли список
+
     const shoppingList = ShoppingList.getById(id);
     if (!shoppingList) {
       return res.status(404).json({ error: "Shopping list not found" });
     }
 
-    // Преобразование `items` в строки (дополнительно)
+
     if (updates.items && Array.isArray(updates.items)) {
       updates.items = updates.items.map(String);
     }
 
-    // Обновляем список
+
     const updatedShoppingList = ShoppingList.update(id, updates);
     res.status(200).json({ shoppingList: updatedShoppingList });
   } catch (error) {
@@ -96,21 +96,21 @@ exports.deleteShoppingList = (req, res) => {
 exports.archiveShoppingList = (req, res) => {
   const { id } = req.params;
 
-  // Проверяем, что ID передан
+
   if (!id) {
     return res.status(400).json({ error: "ID is required" });
   }
 
   try {
-    // Ищем и обновляем статус архивации списка
+
     const updatedShoppingList = ShoppingList.archive(id);
 
-    // Если список не найден
+
     if (!updatedShoppingList) {
       return res.status(404).json({ error: "Shopping list not found" });
     }
 
-    // Возвращаем обновлённый список
+
     res.status(200).json({ shoppingList: updatedShoppingList });
   } catch (error) {
     res.status(500).json({
