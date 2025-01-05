@@ -1,3 +1,4 @@
+
 const shoppingLists = [
   {
     id: "1",
@@ -22,6 +23,22 @@ const shoppingLists = [
     archived: true,
   },
 ];
+
+const mongoose = require('mongoose');
+
+const shoppingListSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  items: [
+    {
+      name: { type: String, required: true },
+      resolved: { type: Boolean, default: false },
+    },
+  ],
+  archived: { type: Boolean, default: false },
+});
+
+module.exports = mongoose.model('ShoppingList', shoppingListSchema);
 
 class ShoppingList {
   static getAll() {

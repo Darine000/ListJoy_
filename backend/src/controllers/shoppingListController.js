@@ -1,8 +1,8 @@
-const ShoppingList = require("../models/shoppingList");
+const ShoppingListService = require("../models/shoppingListService");
 
 exports.getShoppingLists = async (req, res) => {
   try {
-    const shoppingLists = await ShoppingList.getAll();
+    const shoppingLists = await ShoppingListService.getAll();
     res.status(200).json({ shoppingLists });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch shopping lists", details: error.message });
@@ -12,7 +12,7 @@ exports.getShoppingLists = async (req, res) => {
 exports.getShoppingListById = async (req, res) => {
   const { id } = req.params;
   try {
-    const shoppingList = await ShoppingList.getById(id);
+    const shoppingList = await ShoppingListService.getById(id);
     if (!shoppingList) {
       return res.status(404).json({ error: "Shopping list not found" });
     }
@@ -32,7 +32,7 @@ exports.createShoppingList = async (req, res) => {
   }
 
   try {
-    const newShoppingList = ShoppingList.create({
+    const newShoppingList = ShoppingListService.create({
       name,
       owner: req.userProfile,
       items,
@@ -52,7 +52,7 @@ exports.updateShoppingList = (req, res) => {
 
   try {
 
-    const shoppingList = ShoppingList.getById(id);
+    const shoppingList = ShoppingListService.getById(id);
     if (!shoppingList) {
       return res.status(404).json({ error: "Shopping list not found" });
     }
@@ -63,7 +63,7 @@ exports.updateShoppingList = (req, res) => {
     }
 
 
-    const updatedShoppingList = ShoppingList.update(id, updates);
+    const updatedShoppingList = ShoppingListService.update(id, updates);
     res.status(200).json({ shoppingList: updatedShoppingList });
   } catch (error) {
     res.status(500).json({ error: "Failed to update shopping list", details: error.message });
@@ -78,7 +78,7 @@ exports.deleteShoppingList = (req, res) => {
   }
 
   try {
-    const success = ShoppingList.delete(id);
+    const success = ShoppingListService.delete(id);
 
     if (!success) {
       return res.status(404).json({ error: "Shopping list not found" });
@@ -103,7 +103,7 @@ exports.archiveShoppingList = (req, res) => {
 
   try {
 
-    const updatedShoppingList = ShoppingList.archive(id);
+    const updatedShoppingList = ShoppingListService.archive(id);
 
 
     if (!updatedShoppingList) {
